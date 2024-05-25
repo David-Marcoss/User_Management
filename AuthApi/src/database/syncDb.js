@@ -7,5 +7,7 @@ dbConnection.authenticate()
     .then(() => console.log("DB conectado ..."))
     .catch( error => console.log("Erro ao conectar DB: ", error))
 
-User.sync({force: false}).then(() => {})
-ResetPassword.sync({force: false}).then(() => {})
+User.sync({force: false}).then(() => {
+    ResetPassword.sync({force: false}).then(() => {})
+})
+

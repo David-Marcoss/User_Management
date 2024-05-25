@@ -38,7 +38,9 @@ class UserController{
     }
 
     async create(req,res){
+
         try{
+            console.log(process.env.DATABASE_URL)
             const { name, email, password } = req.body
 
             if (name, email , password){
@@ -67,6 +69,8 @@ class UserController{
             }
 
         }catch (error) {
+
+            console.log(error)
             res.status(500).json({error})
         }
 

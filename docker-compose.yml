@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  psql-jobs-jobs-dev:
+  postgres-auth:
     image: postgres:latest
     container_name: postgres-auth
     environment:
@@ -11,7 +11,18 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - auth_db_volume:/var/lib/postgresql/data
+      - postgres_auth_volume:/var/lib/postgresql/data
+  
+  auth-api:
+    container_name: auth-api
+
+    build:
+      context: ./AuthApi/
+    ports:
+      - "3000:3000"
+ 
+    depends_on: 
+      - postgres-auth
 
 volumes:
-  auth_db_volume:
+  postgres_auth_volume:
