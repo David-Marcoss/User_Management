@@ -18,7 +18,7 @@ const routes = [
   },
   {
     path: '/request-reset-password',
-    name: 'register',
+    name: 'request-reset-password',
     component: () => import('../views/RequestResetPassword.vue')
   }
 ]

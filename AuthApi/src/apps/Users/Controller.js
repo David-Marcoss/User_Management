@@ -24,7 +24,7 @@ class UserController{
                         if (error){
                             res.status(500).json({error})
                         }else{
-                            res.status(200).json({token})
+                            res.status(200).json({token, userId: user.id})
                         }
                     }
                 )

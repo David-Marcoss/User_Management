@@ -68,7 +68,7 @@
     import NotificationVue from '../components/Notification.vue'
   
     export default {
-        name: "LoginVue",
+        name: "RegisterVue",
         components:{
             NotificationVue
         },
@@ -79,9 +79,17 @@
                 password: ""
             }
         },
+        created(){
+            if(this.$store.state.authData.isAuthenticated == true){
+                this.$router.push("/")
+            }
+        },
+        
         methods:{
 
         async register(){
+
+            const apiUrl = process.env.VUE_APP_API_URL
 
             if (this.email && this.password){
                 
@@ -95,7 +103,7 @@
                 }else{
                     
                     try {
-                        await axios.post("http://localhost:3000/users",{
+                        await axios.post( apiUrl + "users",{
                             name: this.name,
                             email: this.email,
                             password: this.password

@@ -10,14 +10,7 @@
 
 export default {
   name: 'DashboardView',
-  mounted(){
-   
-    if(this.$store.state.isAuthenticated == false){
-      this.$router.push("/login")
-    }
-    console.log("wqd")
-
-  }
+ 
   
 }
 </script>

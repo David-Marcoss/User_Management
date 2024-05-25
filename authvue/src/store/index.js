@@ -1,10 +1,14 @@
 import { createStore } from 'vuex'
+import axios from 'axios'
 
 export default createStore({
   state: {
-    isAuthenticated: false,
-    authToken: null,
-    
+    authData: {
+      isAuthenticated: false,
+      authToken: undefined,
+      userId: undefined,
+    },
+
     notification: {
       show: false,
       msg: null,
@@ -22,17 +26,50 @@ export default createStore({
     setNotification(state,data){
       state.notification = data
     },
-    userAuthentication(state,token){
-      state.isAuthenticated = true,
-      state.authToken = token
+
+    setAuth(state,{token, userId}){
+      state.authData.isAuthenticated = true,
+      state.authData.authToken = token
+      state.authData.userId = userId
+
+      localStorage.setItem("authData", JSON.stringify(state.authData))
     },
-    
+
+    loadAuth(state, authData){
+      state.authData = authData
+    },
+
+    clearAuth(state){
+      state.authData.isAuthenticated = false,
+      state.authData.authToken = undefined
+      state.authData.userId = undefined
+
+      localStorage.removeItem("authData")
+    }
 
   },
-  getters: {
-  },
   actions: {
+    async checkAuth({commit}){
+      const apiUrl = process.env.VUE_APP_API_URL
+      const authData = JSON.parse(localStorage.getItem("authData"))
+
+      if(authData){
+        try{
+
+          await axios.get(apiUrl + "tokenValid",{
+            headers: {
+              Authorization: authData.authToken
+            }})
+
+          commit("loadAuth", authData)
+
+        }catch(err){
+          commit("clearAuth")
+        }
+      }
+    }
+  
   },
-  modules: {
-  }
+
+
 })

@@ -12,16 +12,17 @@ export default {
   components:{
     
   },
-  mounted(){
-    console.log(process.env)
-    console.log(process.env.API_URL)
+  
+  async mounted(){
 
-    if(this.$store.state.isAuthenticated == false){
-      this.$router.push("/login")
-    }else{
+    await this.$store.dispatch("checkAuth")
+
+    if(this.$store.state.authData.isAuthenticated){
       this.$router.push("/")
+    }else{
+      this.$router.push("/login")
     }
-
+   
   }
 }
 </script>

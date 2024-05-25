@@ -51,7 +51,7 @@
                 </form><br>
                 <div class="field">
                     <p class="control">
-                        <router-link  to="/register" class="button is-fullwidth is-info is-inverted is-rounded">
+                        <router-link  to="register" class="button is-fullwidth is-info is-inverted is-rounded">
                             Cadastra-se
                         </router-link>
                     </p>
@@ -78,21 +78,27 @@ export default {
         }
     },
 
+    created(){
+        if(this.$store.state.authData.isAuthenticated == true){
+            this.$router.push("/")
+        }
+    },
+
     methods:{
         async login(){
+            const apiUrl = process.env.VUE_APP_API_URL
 
             if( this.email && this.password){
 
                 try{
-                    const req = await axios.post("http://localhost:3000/users/login", {
+                    const req = await axios.post(apiUrl + "users/login", {
                         email: this.email,
                         password:this.password
                     })
 
-                    const {token} = req.data
+                    const {token, userId } = req.data
 
-                    this.$store.commit("userAuthentication",token)
-
+                    this.$store.commit("setAuth",{token, userId})
                     this.$router.push("/")
                     
 
