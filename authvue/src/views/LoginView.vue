@@ -78,12 +78,6 @@ export default {
         }
     },
 
-    created(){
-        if(this.$store.state.authData.isAuthenticated == true){
-            this.$router.push("/")
-        }
-    },
-
     methods:{
         async login(){
             const apiUrl = process.env.VUE_APP_API_URL

@@ -20,6 +20,7 @@ UserRouter.delete("/users/:id",auth, UserController.delete)
 UserRouter.post("/users/change-password/:id",auth,changePasswordRules, UserController.changePassword)
 UserRouter.post("/users/request-reset-password",requestResetPasswordRules,UserController.requestResetPassword),
 UserRouter.post("/users/reset-password/:token",resetPasswordRules,UserController.resetPassword)
+UserRouter.get("/users/verify-reset-password/:token", UserController.verifyResetPasswordToken )
 
 
 module.exports = UserRouter

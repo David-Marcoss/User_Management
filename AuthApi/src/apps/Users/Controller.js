@@ -200,7 +200,6 @@ class UserController{
             const hasRequest = await ResetPassword.findOne({
                 where: {
                     userId: user.id,
-                    ative: true
                 }
             })
 
@@ -210,11 +209,11 @@ class UserController{
 
                 await ResetPassword.create({
                     token,
-                    ative: true,
+                    active: true,
                     userId: user.id
                 })
 
-                const url =  `http://localhost:3000/users/reset-password/${token}`
+                const url =  process.env.FRONTEND_URL + `#/reset-password/${token}`
                 sendMail(email,url)
 
                 res.status(200).json({
@@ -230,6 +229,33 @@ class UserController{
         }else{
             res.status(400).json({ error: "E-mail does not exist !!" })
         }
+    }
+
+    async verifyResetPasswordToken(req, res){
+        const token = req.params.token
+
+        console.log("here")
+        console.log("token: ",token)
+
+        if (token == undefined){
+            res.status(404).json({isValid: false})
+        }else{
+            
+            const hasRequest = await ResetPassword.findOne({
+                where: {
+                    token,
+                    active: true
+                }
+            })
+    
+            if ( hasRequest && hasRequest.active){
+                res.status(200).json({isValid: true})
+            }else{
+                res.status(404).json({isValid: false})
+            }
+
+        }
+
     }
 
     async resetPassword(req, res){

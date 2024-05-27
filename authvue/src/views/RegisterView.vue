@@ -79,11 +79,6 @@
                 password: ""
             }
         },
-        created(){
-            if(this.$store.state.authData.isAuthenticated == true){
-                this.$router.push("/")
-            }
-        },
         
         methods:{
 

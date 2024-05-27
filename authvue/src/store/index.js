@@ -50,6 +50,9 @@ export default createStore({
   },
   actions: {
     async checkAuth({commit}){
+
+      console.log('here')
+      
       const apiUrl = process.env.VUE_APP_API_URL
       const authData = JSON.parse(localStorage.getItem("authData"))
 

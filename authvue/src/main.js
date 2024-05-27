@@ -9,4 +9,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-createApp(App).use(store).use(router).mount('#app')
+store.dispatch('checkAuth').then(() => {
+    createApp(App).use(store).use(router).mount('#app')
+})
+

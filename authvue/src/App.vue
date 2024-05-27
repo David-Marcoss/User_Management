@@ -9,21 +9,8 @@
 <script>
 
 export default {
-  components:{
-    
-  },
-  
-  async mounted(){
+  name: 'App',
 
-    await this.$store.dispatch("checkAuth")
-
-    if(this.$store.state.authData.isAuthenticated){
-      this.$router.push("/")
-    }else{
-      this.$router.push("/login")
-    }
-   
-  }
 }
 </script>
 

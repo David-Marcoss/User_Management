@@ -20,7 +20,7 @@
               
               <NotificationVue />
               
-              <div class="content">
+              <div class="content" v-if="showForm">
                   <form @submit.prevent="requestResetPassword">
                       <div class="field">
                           <label for="E-mail"> E-mail</label>
@@ -55,31 +55,40 @@ export default {
     },
     data(){
         return{
-            showForm: "",
+            showForm: undefined,
             email: "",
             password: ""
         }
     },
 
+    created(){
+        this.showForm = true
+    },
+
     methods:{
         async requestResetPassword(){
+            const apiUrl = process.env.VUE_APP_API_URL
 
             if( this.email){
 
                 try{
-                    const req = await axios.post("http://localhost:3000/users/request-reset-password", {
+                    await axios.post( apiUrl + "users/request-reset-password", {
                         email: this.email,
                     })
 
-                    console.log(req)
-                    
-
-                }catch (error ){
-                    const info = error.response != undefined ? error.response.data.error : "Erro no servidor !!"
-                        
                     this.$store.commit("setNotification",{
                         show: true,
-                        msg: "Não foi possivel realizar login \n "+ info,
+                        msg: "Um e-mail foi enviado para você com as instruções para recuperar sua senha",
+                        type: "success"
+                    })
+                    
+                    this.showForm = false
+
+                }catch (error ){
+      
+                    this.$store.commit("setNotification",{
+                        show: true,
+                        msg: "Email Invalido\n",
                         type: "danger"
                     })
             }
