@@ -9,7 +9,26 @@
 export default {
     name: "NotificationVue",
     props: ["msg","type"],
+
+    computed: {
+        show() {
+        return this.$store.state.notification.show;
+        }
+    },
+
+    watch: {
+        show(newValue) {
+            if (newValue) {
+                this.startTimeout();
+            }
+        }
+    },
     methods:{
+        startTimeout() {
+            setTimeout(() => {
+                this.deleteNotification();
+            }, 3000);
+        },
         deleteNotification(){
             
             this.$store.commit("setNotification",{

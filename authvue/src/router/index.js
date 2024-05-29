@@ -10,6 +10,29 @@ const routes = [
     component: () => import( '../views/DashboardView.vue')
   },
   {
+    path: '/user',
+    name: 'user',
+    beforeEnter: isAuthenticated,
+    component: () => import( '../views/UserView.vue'),
+    children: [
+      {
+        path: 'edit',
+        name: 'edit',
+        component: () => import( '../components/User/UserEdit.vue'),
+      },
+      {
+        path: 'change-password',
+        name: 'change-password',
+        component: () => import( '../components/User/UserChangePassword.vue'),
+      },
+      {
+        path: 'delete',
+        name: 'delete',
+        component: () => import( '../components/User/UserDelete.vue'),
+      }
+    ]
+  },
+  {
     path: '/logout',
     name: 'logout',
     beforeEnter: logout

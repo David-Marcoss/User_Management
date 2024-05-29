@@ -20,7 +20,7 @@ export default {
   position: absolute;
   height: 100%;
   width: 100%;
-  background-color: beige;
+  background-color: #f5f5f5;
 }
 
 
