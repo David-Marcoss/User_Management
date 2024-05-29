@@ -23,6 +23,17 @@ services:
  
     depends_on: 
       - postgres-auth
+  
+  auth-vue:
+    container_name: auth-vue
+
+    build:
+      context: ./AuthVue/
+    ports:
+      - "8080:8080"
+ 
+    depends_on: 
+      - auth-api
 
 volumes:
   postgres_auth_volume:
